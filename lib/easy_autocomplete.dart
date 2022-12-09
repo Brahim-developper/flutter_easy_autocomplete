@@ -225,8 +225,9 @@ class _EasyAutocompleteState extends State<EasyAutocomplete> {
             _isLoading = false;
             _previousAsyncSearchText = input;
           });
-          rebuildOverlay();
+          return rebuildOverlay();
         }
+        setState(() => _isLoading = false);
       });
     }
   }
