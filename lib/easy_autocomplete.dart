@@ -155,6 +155,11 @@ class _EasyAutocompleteState extends State<EasyAutocomplete> {
     });
   }
 
+  @override
+  void setState(VoidCallback fn) {
+    if (mounted) super.setState(fn);
+  }
+
   void openOverlay() {
     if (_overlayEntry == null) {
       RenderBox renderBox = context.findRenderObject() as RenderBox;
