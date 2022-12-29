@@ -212,7 +212,6 @@ class _EasyAutocompleteState extends State<EasyAutocomplete> {
   }
 
   Future<void> updateSuggestions(String input) async {
-    if (input.isEmpty) return;
     rebuildOverlay();
     if (widget.suggestions != null) {
       _suggestions = widget.suggestions!.where((element) {
@@ -230,20 +229,17 @@ class _EasyAutocompleteState extends State<EasyAutocomplete> {
         rebuildOverlay();
         return;
       }
-      setState(() => _isLoading = true);
-      _debounce = Timer(widget.debounceDuration, () async {
-        if (_previousAsyncSearchText != input ||
-            _previousAsyncSearchText.isEmpty ||
-            input.isEmpty) {
+      if (_previousAsyncSearchText != input) {
+        setState(() => _isLoading = true);
+        _debounce = Timer(widget.debounceDuration, () async {
           _suggestions = await widget.asyncSuggestions!(input);
           setState(() {
             _isLoading = false;
             _previousAsyncSearchText = input;
           });
           return rebuildOverlay();
-        }
-        setState(() => _isLoading = false);
-      });
+        });
+      }
     }
   }
 
