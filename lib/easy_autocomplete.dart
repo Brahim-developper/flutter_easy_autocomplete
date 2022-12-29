@@ -221,6 +221,15 @@ class _EasyAutocompleteState extends State<EasyAutocomplete> {
     } else if (widget.asyncSuggestions != null) {
       setState(() => _isLoading = true);
       if (_debounce != null && _debounce!.isActive) _debounce!.cancel();
+      if (input.isEmpty) {
+        setState(() {
+          _suggestions = [];
+          _isLoading = false;
+          _previousAsyncSearchText = input;
+        });
+        rebuildOverlay();
+        return;
+      }
       _debounce = Timer(widget.debounceDuration, () async {
         if (_previousAsyncSearchText != input ||
             _previousAsyncSearchText.isEmpty ||
