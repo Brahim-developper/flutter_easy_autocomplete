@@ -212,6 +212,7 @@ class _EasyAutocompleteState extends State<EasyAutocomplete> {
   }
 
   Future<void> updateSuggestions(String input) async {
+    if (input.isEmpty) return;
     rebuildOverlay();
     if (widget.suggestions != null) {
       _suggestions = widget.suggestions!.where((element) {
