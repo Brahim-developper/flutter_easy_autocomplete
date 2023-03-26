@@ -37,17 +37,19 @@ class FilterableList extends StatelessWidget {
   final bool loading;
   final Widget Function(String data)? suggestionBuilder;
   final Widget? progressIndicatorBuilder;
+  final ScrollController scrollController;
 
-  const FilterableList(
-      {required this.items,
-      required this.onItemTapped,
-      this.suggestionBuilder,
-      this.elevation = 5,
-      this.maxListHeight = 150,
-      this.suggestionTextStyle = const TextStyle(),
-      this.suggestionBackgroundColor,
-      this.loading = false,
-      this.progressIndicatorBuilder});
+  FilterableList({
+    required this.items,
+    required this.onItemTapped,
+    this.suggestionBuilder,
+    this.elevation = 5,
+    this.maxListHeight = 150,
+    this.suggestionTextStyle = const TextStyle(),
+    this.suggestionBackgroundColor,
+    this.loading = false,
+    this.progressIndicatorBuilder,
+  }) : scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
@@ -68,8 +70,10 @@ class FilterableList extends StatelessWidget {
           visible: items.isNotEmpty || loading,
           child: Scrollbar(
             thumbVisibility: true,
+            controller: scrollController,
             child: ListView.builder(
               shrinkWrap: true,
+              controller: scrollController,
               padding: const EdgeInsets.all(5),
               itemCount: loading ? 1 : items.length,
               itemBuilder: (context, index) {
