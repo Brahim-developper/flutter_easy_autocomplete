@@ -167,7 +167,6 @@ class _EasyAutocompleteState extends State<EasyAutocomplete> {
       var offset = renderBox.localToGlobal(Offset.zero);
 
       _overlayEntry ??= OverlayEntry(
-        maintainState: true,
         builder: (context) => Positioned(
           left: offset.dx,
           top: offset.dy + size.height + 5.0,
