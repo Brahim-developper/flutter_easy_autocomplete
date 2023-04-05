@@ -39,7 +39,7 @@ class FilterableList extends StatelessWidget {
   final Widget? progressIndicatorBuilder;
   final ScrollController scrollController;
 
-  FilterableList({
+  const FilterableList({
     required this.items,
     required this.onItemTapped,
     this.suggestionBuilder,
@@ -49,7 +49,8 @@ class FilterableList extends StatelessWidget {
     this.suggestionBackgroundColor,
     this.loading = false,
     this.progressIndicatorBuilder,
-  }) : scrollController = ScrollController();
+    required this.scrollController,
+  });
 
   @override
   Widget build(BuildContext context) {

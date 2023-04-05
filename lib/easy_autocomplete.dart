@@ -194,6 +194,7 @@ class _EasyAutocompleteState extends State<EasyAutocomplete> {
                   closeOverlay();
                   _focusNode.unfocus();
                 },
+                scrollController: ScrollController(),
               ),
             ),
           ),
