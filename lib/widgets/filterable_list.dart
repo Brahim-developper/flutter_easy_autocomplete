@@ -79,12 +79,14 @@ class FilterableList extends StatelessWidget {
               itemBuilder: (context, index) {
                 if (loading) {
                   return Container(
-                      alignment: Alignment.center,
-                      padding: EdgeInsets.all(10),
-                      child: Visibility(
-                          visible: progressIndicatorBuilder != null,
-                          child: progressIndicatorBuilder!,
-                          replacement: CircularProgressIndicator()));
+                    alignment: Alignment.center,
+                    padding: EdgeInsets.all(10),
+                    child: Visibility(
+                      visible: progressIndicatorBuilder != null,
+                      child: progressIndicatorBuilder!,
+                      replacement: CircularProgressIndicator(),
+                    ),
+                  );
                 }
 
                 if (suggestionBuilder != null) {
@@ -98,9 +100,10 @@ class FilterableList extends StatelessWidget {
                   color: Colors.transparent,
                   child: InkWell(
                     child: Container(
-                        width: double.infinity,
-                        padding: EdgeInsets.all(5),
-                        child: Text(items[index], style: suggestionTextStyle)),
+                      width: double.infinity,
+                      padding: EdgeInsets.all(5),
+                      child: Text(items[index], style: suggestionTextStyle),
+                    ),
                     onTap: () => onItemTapped(items[index]),
                   ),
                 );

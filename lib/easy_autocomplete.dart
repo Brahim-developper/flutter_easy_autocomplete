@@ -176,23 +176,26 @@ class _EasyAutocompleteState extends State<EasyAutocomplete> {
             link: _layerLink,
             showWhenUnlinked: false,
             offset: Offset(0.0, size.height + 5.0),
-            child: FilterableList(
-              loading: _isLoading,
-              suggestionBuilder: widget.suggestionBuilder,
-              progressIndicatorBuilder: widget.progressIndicatorBuilder,
-              items: _suggestions,
-              suggestionTextStyle: widget.suggestionTextStyle,
-              suggestionBackgroundColor: widget.suggestionBackgroundColor,
-              onItemTapped: (value) {
-                _controller
-                  ..value = TextEditingValue(
-                      text: value,
-                      selection: TextSelection.collapsed(offset: value.length));
-                widget.onChanged?.call(value);
-                widget.onSubmitted?.call(value);
-                closeOverlay();
-                _focusNode.unfocus();
-              },
+            child: TextFieldTapRegion(
+              child: FilterableList(
+                loading: _isLoading,
+                suggestionBuilder: widget.suggestionBuilder,
+                progressIndicatorBuilder: widget.progressIndicatorBuilder,
+                items: _suggestions,
+                suggestionTextStyle: widget.suggestionTextStyle,
+                suggestionBackgroundColor: widget.suggestionBackgroundColor,
+                onItemTapped: (value) {
+                  _controller
+                    ..value = TextEditingValue(
+                        text: value,
+                        selection:
+                            TextSelection.collapsed(offset: value.length));
+                  widget.onChanged?.call(value);
+                  widget.onSubmitted?.call(value);
+                  closeOverlay();
+                  _focusNode.unfocus();
+                },
+              ),
             ),
           ),
         ),
