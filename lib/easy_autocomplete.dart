@@ -167,33 +167,36 @@ class _EasyAutocompleteState extends State<EasyAutocomplete> {
       var offset = renderBox.localToGlobal(Offset.zero);
 
       _overlayEntry ??= OverlayEntry(
-          builder: (context) => Positioned(
-              left: offset.dx,
-              top: offset.dy + size.height + 5.0,
-              width: size.width,
-              child: CompositedTransformFollower(
-                  link: _layerLink,
-                  showWhenUnlinked: false,
-                  offset: Offset(0.0, size.height + 5.0),
-                  child: FilterableList(
-                      loading: _isLoading,
-                      suggestionBuilder: widget.suggestionBuilder,
-                      progressIndicatorBuilder: widget.progressIndicatorBuilder,
-                      items: _suggestions,
-                      suggestionTextStyle: widget.suggestionTextStyle,
-                      suggestionBackgroundColor:
-                          widget.suggestionBackgroundColor,
-                      onItemTapped: (value) {
-                        _controller
-                          ..value = TextEditingValue(
-                              text: value,
-                              selection: TextSelection.collapsed(
-                                  offset: value.length));
-                        widget.onChanged?.call(value);
-                        widget.onSubmitted?.call(value);
-                        closeOverlay();
-                        _focusNode.unfocus();
-                      }))));
+        maintainState: true,
+        builder: (context) => Positioned(
+          left: offset.dx,
+          top: offset.dy + size.height + 5.0,
+          width: size.width,
+          child: CompositedTransformFollower(
+            link: _layerLink,
+            showWhenUnlinked: false,
+            offset: Offset(0.0, size.height + 5.0),
+            child: FilterableList(
+              loading: _isLoading,
+              suggestionBuilder: widget.suggestionBuilder,
+              progressIndicatorBuilder: widget.progressIndicatorBuilder,
+              items: _suggestions,
+              suggestionTextStyle: widget.suggestionTextStyle,
+              suggestionBackgroundColor: widget.suggestionBackgroundColor,
+              onItemTapped: (value) {
+                _controller
+                  ..value = TextEditingValue(
+                      text: value,
+                      selection: TextSelection.collapsed(offset: value.length));
+                widget.onChanged?.call(value);
+                widget.onSubmitted?.call(value);
+                closeOverlay();
+                _focusNode.unfocus();
+              },
+            ),
+          ),
+        ),
+      );
     }
     if (!_hasOpenedOverlay) {
       Overlay.of(context).insert(_overlayEntry!);
@@ -252,34 +255,36 @@ class _EasyAutocompleteState extends State<EasyAutocomplete> {
   @override
   Widget build(BuildContext context) {
     return CompositedTransformTarget(
-        link: _layerLink,
-        child: Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              TextFormField(
-                  decoration: widget.decoration,
-                  controller: _controller,
-                  inputFormatters: widget.inputFormatter,
-                  autofocus: widget.autofocus,
-                  focusNode: _focusNode,
-                  textCapitalization: widget.textCapitalization,
-                  keyboardType: widget.keyboardType,
-                  cursorColor: widget.cursorColor ?? Colors.blue,
-                  style: widget.inputTextStyle,
-                  onChanged: (value) => widget.onChanged?.call(value),
-                  onFieldSubmitted: (value) {
-                    widget.onSubmitted?.call(value);
-                    closeOverlay();
-                    _focusNode.unfocus();
-                  },
-                  onEditingComplete: () => closeOverlay(),
-                  validator: widget.validator != null
-                      ? (value) => widget.validator!(value)
-                      : null // (value) {}
-                  )
-            ]));
+      link: _layerLink,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          TextFormField(
+              decoration: widget.decoration,
+              controller: _controller,
+              inputFormatters: widget.inputFormatter,
+              autofocus: widget.autofocus,
+              focusNode: _focusNode,
+              textCapitalization: widget.textCapitalization,
+              keyboardType: widget.keyboardType,
+              cursorColor: widget.cursorColor ?? Colors.blue,
+              style: widget.inputTextStyle,
+              onChanged: (value) => widget.onChanged?.call(value),
+              onFieldSubmitted: (value) {
+                widget.onSubmitted?.call(value);
+                closeOverlay();
+                _focusNode.unfocus();
+              },
+              onEditingComplete: () => closeOverlay(),
+              validator: widget.validator != null
+                  ? (value) => widget.validator!(value)
+                  : null // (value) {}
+              )
+        ],
+      ),
+    );
   }
 
   @override

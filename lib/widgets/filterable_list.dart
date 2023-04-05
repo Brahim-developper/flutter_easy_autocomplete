@@ -89,19 +89,21 @@ class FilterableList extends StatelessWidget {
 
                 if (suggestionBuilder != null) {
                   return InkWell(
-                      child: suggestionBuilder!(items[index]),
-                      onTap: () => onItemTapped(items[index]));
+                    child: suggestionBuilder!(items[index]),
+                    onTap: () => onItemTapped(items[index]),
+                  );
                 }
 
                 return Material(
-                    color: Colors.transparent,
-                    child: InkWell(
-                        child: Container(
-                            width: double.infinity,
-                            padding: EdgeInsets.all(5),
-                            child:
-                                Text(items[index], style: suggestionTextStyle)),
-                        onTap: () => onItemTapped(items[index])));
+                  color: Colors.transparent,
+                  child: InkWell(
+                    child: Container(
+                        width: double.infinity,
+                        padding: EdgeInsets.all(5),
+                        child: Text(items[index], style: suggestionTextStyle)),
+                    onTap: () => onItemTapped(items[index]),
+                  ),
+                );
               },
             ),
           ),
