@@ -137,7 +137,7 @@ class _EasyAutocompleteState extends State<EasyAutocomplete> {
   OverlayEntry? _overlayEntry;
   List<String> _suggestions = [];
   Timer? _debounce;
-  String _previousAsyncSearchText = '';
+  String? _previousAsyncSearchText;
   late FocusNode _focusNode;
 
   @override
@@ -226,15 +226,6 @@ class _EasyAutocompleteState extends State<EasyAutocomplete> {
       rebuildOverlay();
     } else if (widget.asyncSuggestions != null) {
       if (_debounce != null && _debounce!.isActive) _debounce!.cancel();
-      if (input.isEmpty) {
-        setState(() {
-          _suggestions = [];
-          _isLoading = false;
-          _previousAsyncSearchText = input;
-        });
-        rebuildOverlay();
-        return;
-      }
       if (_previousAsyncSearchText != input) {
         setState(() => _isLoading = true);
         _debounce = Timer(widget.debounceDuration, () async {
